@@ -69,7 +69,7 @@ static void usage(char* progname)
     
     printf("Usage:  %s [options] source-file\n", progname);
     printf("See: http://www.JSLint.com/lint.html\n");
-    printf("default selected: --bitwise --eqeqeq --immed --newcap --nomen --onevar --regexp --undef --white\n");
+    printf("default selected: the good parts + strict + browser\n");
     printf("[options]\n");
     printf(" --vim         : produce output in a form suitable for vim editor.\n");
     printf(" --adsafe      : ADsafe\n");
@@ -145,15 +145,23 @@ int main(int argc, char* argv[])
     }
 
     if (!some_parameter) {
-        options->Set("bitwise", Boolean::New(true));
+        /* The good parts as defined by Douglas Crockford */
+        options->Set("white", Boolean::New(true));
+        options->Set("onevar", Boolean::New(true));
+        options->Set("undef", Boolean::New(true));
+        options->Set("nomen", Boolean::New(true));
+        options->Set("regexp", Boolean::New(true));
+        options->Set("plusplus", Boolean::New(true));
         options->Set("eqeqeq", Boolean::New(true));
         options->Set("immed", Boolean::New(true));
+        options->Set("bitwise", Boolean::New(true));
         options->Set("newcap", Boolean::New(true));
-        options->Set("nomen", Boolean::New(true));
-        options->Set("onevar", Boolean::New(true));
-        options->Set("regexp", Boolean::New(true));
-        options->Set("undef", Boolean::New(true));
-        options->Set("white", Boolean::New(true));
+
+        /* strict */
+        options->Set("strict", Boolean::New(true));
+
+        /* assume browser */
+        options->Set("browser", Boolean::New(true));
     }
 
     global->Set(v8::String::New("print"), v8::FunctionTemplate::New(Print));

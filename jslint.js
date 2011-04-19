@@ -2571,7 +2571,7 @@ loop:   for (;;) {
             advance();
             advance(';');
             strict_mode = true;
-            option.newcap = true;
+            /* option.newcap = true; WTF? */
             option.undef = true;
             return true;
         } else {

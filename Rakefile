@@ -8,4 +8,5 @@ end
 task :convert_js_to_h do
   sh "ruby convert_to_h.rb print_vim.js > print_vim.h"
   sh "ruby convert_to_h.rb print_human.js > print_human.h"
+  sh "ruby convert_to_h.rb jslint.js > jslint.h"
 end
