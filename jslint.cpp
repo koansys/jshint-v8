@@ -8,6 +8,7 @@
 
 #include "jslint.h"
 #include "v8.h"
+#include "print_vim.h"
 
 using namespace v8;
 
@@ -107,6 +108,7 @@ static void usage(char* progname)
 int main(int argc, char* argv[])
 {
     Handle<String> source;
+    Handle<String> filename;
     HandleScope handle_scope;
 
     Handle<ObjectTemplate> global = ObjectTemplate::New();
@@ -120,6 +122,7 @@ int main(int argc, char* argv[])
         if (argv[argpos][0] != '-') {
             source = readFile(argv[argpos]);
             output = argv[argpos];
+            filename = String::New(argv[argpos]); 
 
         } else if (strcmp(argv[argpos], "--help") == 0 ||
                    strcmp(argv[argpos], "-h") == 0) {
@@ -151,6 +154,7 @@ int main(int argc, char* argv[])
 
     global->Set(v8::String::New("print"), v8::FunctionTemplate::New(Print));
     global->Set("source", source);
+    global->Set("filename", filename);
     global->Set("options", options);
     
     Handle<Context> context = Context::New(NULL, global);
@@ -163,7 +167,7 @@ int main(int argc, char* argv[])
     Handle<Script> runnerScript = Script::Compile(String::New("JSLINT(source, options);"));
     Handle<Value> result = runnerScript->Run();
 
-    Handle<Script> printScript = Script::Compile(String::New(v8_code));
+    Handle<Script> printScript = Script::Compile(String::New(print_vim_code));
     printScript->Run();
 
     return 0;
