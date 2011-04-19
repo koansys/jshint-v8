@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "jslint.h"
-#include "v8.h"
+#include "print_human.h"
 #include "print_vim.h"
 
 using namespace v8;
@@ -71,6 +71,7 @@ static void usage(char* progname)
     printf("See: http://www.JSLint.com/lint.html\n");
     printf("default selected: --bitwise --eqeqeq --immed --newcap --nomen --onevar --regexp --undef --white\n");
     printf("[options]\n");
+    printf(" --vim         : produce output in a form suitable for vim editor.\n");
     printf(" --adsafe      : ADsafe\n");
     printf(" --bitwise     : Disallow bitwise operator.\n"); 
     printf(" --browser     : Assume a browser.\n");
@@ -117,6 +118,7 @@ int main(int argc, char* argv[])
     bool overwrite = false;
     const char* output = 0;
     bool some_parameter = false;
+    bool vim_mode = false;
     
     for (int argpos = 1; argpos < argc; ++argpos) {
         if (argv[argpos][0] != '-') {
@@ -128,6 +130,8 @@ int main(int argc, char* argv[])
                    strcmp(argv[argpos], "-h") == 0) {
             usage(argv[0]);
             return -1;
+        } else if (strcmp(argv[argpos], "--vim") == 0) {
+            vim_mode = true;
         } else if (strncmp(argv[argpos], "--", 2) == 0) {
             // TODO: check if is valid.
             some_parameter = true;
@@ -167,7 +171,11 @@ int main(int argc, char* argv[])
     Handle<Script> runnerScript = Script::Compile(String::New("JSLINT(source, options);"));
     Handle<Value> result = runnerScript->Run();
 
-    Handle<Script> printScript = Script::Compile(String::New(print_vim_code));
+    Handle<Script> printScript;
+    if (vim_mode) 
+        printScript = Script::Compile(String::New(print_vim_code));
+    else 
+        printScript = Script::Compile(String::New(print_human_code));
     printScript->Run();
 
     return 0;
