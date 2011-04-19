@@ -1,13 +1,53 @@
 
-Jslint v8 command
-=================
+Run jslint on command line fast (with v8 engine)
+================================================
 
-This work was inspired by jsbeautify implementation.
+jslint-v8 is a modern and extreamly fast runner for the popular jslint
+JavaScript style checker. [jslint][] is implemented by the JavaScript guru
+Douglas Crockford in JavaScript itself.
 
-Compile:
-    g++ -o jslint jslint.cpp -I<V8_BASEDIR>/include/ -lv8 -L<V8_BASEDIR>/lib -lpthread
+Credits
+--------
+* this work was inspired by [jsbeautify][] implementation.
+* original jslint-v8 implementation by [jlbfalcao][]
+* vim support and Rakefile by [Vladimir Dobriakov][]
 
-Running
-=======
 
-    jslint file.js
+Build
+-----
+
+[Download][v8 doc] and compile v8 JavaScript engine as shared library.
+On my 64bit Ubuntu Linux I have used:
+
+    scons library=shared arch=x64
+
+Copy the v8 shared library to /usr/lib
+
+    sudo cp libv8.so /usr/lib
+
+Build this jslint-v8
+
+    V8_BASEDIR=/your/path/to/v8-trunk rake build
+
+
+Run on console
+--------------
+
+    jslint --browser file.js
+
+
+Run from vim
+------------
+
+Set up `jslint` as make program in .vimrc:
+
+    autocmd BufRead,BufNewFile *.js,*.json setlocal makeprg=jslint\ --vim\ \%
+
+`--vim` provides error message formatting suitable for parsing in vim
+(TODO)
+
+[v8 doc]: http://code.google.com/apis/v8/build.html
+[jsbeautify]: http://blog.slashpoundbang.com/post/2488598258/running-javascript-from-the-command-line-with-v8
+[jlbfalcao]: https://github.com/jlbfalcao/jslint-v8
+[Vladimir Dobriakov]: http://www.mobile-web-consulting.de
+[jslint]: http://www.jslint.com/
