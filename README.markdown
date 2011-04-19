@@ -56,9 +56,12 @@ Set up `jslint` as make program in .vimrc:
 Now you can check your JavaScript easily with `:make` or even
 automatically on every file save or load.
 
+See a screenshot for [usage inside vim][screenshot].
+
 [v8 doc]: http://code.google.com/apis/v8/build.html
 [jsbeautify]: http://blog.slashpoundbang.com/post/2488598258/running-javascript-from-the-command-line-with-v8
 [jlbfalcao]: https://github.com/jlbfalcao/jslint-v8
 [Vladimir Dobriakov]: http://www.mobile-web-consulting.de
 [jslint]: http://www.jslint.com/
 [geekQ]: http://www.geekQ.net/
+[screenshot]: http://www.mobile-web-consulting.de/post/4745654954/run-jslint-fast-v8-engine-for-vim
