@@ -16,18 +16,22 @@ Credits
 Build
 -----
 
-[Download][v8 doc] and compile v8 JavaScript engine as shared library.
-On my 64bit Ubuntu Linux I have used:
+[Download][v8 doc] and compile v8 JavaScript engine according official
+manual as shared library. On my 64bit Ubuntu Linux I have used:
 
     scons library=shared arch=x64
 
-Copy the v8 shared library to /usr/lib
+Copy the v8 shared library to /usr/lib or whatever place is appropriate
+for your OS:
 
     sudo cp libv8.so /usr/lib
 
-Build this jslint-v8
+Compile jslint-v8
 
-    V8_BASEDIR=/your/path/to/v8-trunk rake build
+    V8_BASEDIR=/your/path/to/v8-trunk rake compile
+
+If you do not have ruby/rake you can run g++ directly, please look
+inside Rakefile.
 
 
 Run on console
