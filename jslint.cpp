@@ -90,7 +90,8 @@ static void usage(char* progname)
     printf(" --maxerr      : Maximum number of errors.\n");
     printf(" --maxlen      : Maximum line length.\n");
     printf(" --nomen       : Disallow dangling _ in identifiers.\n");
-    printf(" --newcap      : Require Initial Caps for constructors on 	 Tolerate HTML event handlers.\n"); 
+    printf(" --newcap      : Require Initial Caps for constructors.\n");
+    printf(" --on          : Tolerate HTML event handlers.\n");
     printf(" --onevar      : Allow one var statement per function.\n");
     printf(" --passfail    : Stop on first error.\n");
     printf(" --plusplus    : Disallow ++ and --.\n");
