@@ -6,7 +6,7 @@
 
 #include <string.h>
 
-#include "jslint.h"
+#include "jshint.h"
 #include "print_human.h"
 #include "print_vim.h"
 
@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
 
     Context::Scope context_scope(context);
 
-    Handle<Script> beautifyScript = Script::Compile(String::New(jslint_code));
+    Handle<Script> beautifyScript = Script::Compile(String::New(jshint_code));
     beautifyScript->Run();
 
     Handle<Script> runnerScript = Script::Compile(String::New("JSHINT(source, options);"));
