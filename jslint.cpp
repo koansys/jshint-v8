@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Jorge Falcão basead in js-beautify code 
+    Copyright (c) 2010 Jorge Falcão basead in js-beautify code
  */
 
 #include <v8.h>
@@ -14,26 +14,26 @@ using namespace v8;
 
 Handle<String> readFile(const char* name) {
     FILE* file = fopen(name, "rb");
-    
+
     if (file == NULL) {
         return Handle<String>();
     }
-    
+
     fseek(file, 0, SEEK_END);
     int len = ftell(file);
     rewind(file);
-  
+
     char* buf = new char[len + 1];
     buf[len] = '\0';
-    
+
     fread(buf, 1, len, file);
 
     fclose(file);
-    
+
     Handle<String> result = String::New(buf);
-    
+
     delete[] buf;
-    
+
     return result;
 }
 
@@ -66,24 +66,24 @@ v8::Handle<v8::Value> Print(const v8::Arguments& args) {
 
 static void usage(char* progname)
 {
-    
+
     printf("Usage:  %s [options] source-file\n", progname);
-    printf("See: http://www.JSLint.com/lint.html\n");
-    printf("default selected: the good parts + strict + browser\n");
+    printf("See: http://www.JSHint.com/\n");
+    printf("default selected: the good parts + strict + node\n");
     printf("[options]\n");
     printf(" --vim         : produce output in a form suitable for vim editor.\n");
     printf(" --adsafe      : ADsafe\n");
-    printf(" --bitwise     : Disallow bitwise operator.\n"); 
+    printf(" --bitwise     : Disallow bitwise operator.\n");
     printf(" --browser     : Assume a browser.\n");
-    printf(" --cap         : Tolerate HTML case.\n"); 
+    printf(" --cap         : Tolerate HTML case.\n");
     printf(" --css         : Tolerate CSS workarounds.\n");
     printf(" --debug       : Tolerate debugger statements.\n");
     printf(" --devel       : Assume console, alert, ...\n");
     printf(" --eqeqeq      : Disallow == and !=\n");
     printf(" --es5         : Tolerate ES5 syntax\n");
     printf(" --evil        : Tolerate eval\n");
-    printf(" --forin       : Tolerate unfiltered for in.\n"); 
-    printf(" --fragment    : Tolerate HTML fragments.\n"); 
+    printf(" --forin       : Tolerate unfiltered for in.\n");
+    printf(" --fragment    : Tolerate HTML fragments.\n");
     printf(" --immed       : Require parens around immediate invocations.\n");
     printf(" --indent      : Strict white space indentation.\n");
     printf(" --laxbreak    : Tolerate sloppy line breaking.\n");
@@ -99,7 +99,7 @@ static void usage(char* progname)
     printf(" --regexp      : Disallow insecure . and [^...]. in /RegExp/.\n");
     printf(" --rhino       : Assume Rhino.\n");
     printf(" --safe        : Safe Subset .\n");
-    printf(" --strict      : Require \"use strict\";.\n"); 
+    printf(" --strict      : Require \"use strict\";.\n");
     printf(" --sub         : Tolerate inefficient subscripting.\n");
     printf(" --undef       : Disallow undefined variables.\n");
     printf(" --white       : Strict white space.\n");
@@ -115,17 +115,17 @@ int main(int argc, char* argv[])
 
     Handle<ObjectTemplate> global = ObjectTemplate::New();
     Handle<ObjectTemplate> options = ObjectTemplate::New();
-    
+
     bool overwrite = false;
     const char* output = 0;
     bool some_parameter = false;
     bool vim_mode = false;
-    
+
     for (int argpos = 1; argpos < argc; ++argpos) {
         if (argv[argpos][0] != '-') {
             source = readFile(argv[argpos]);
             output = argv[argpos];
-            filename = String::New(argv[argpos]); 
+            filename = String::New(argv[argpos]);
 
         } else if (strcmp(argv[argpos], "--help") == 0 ||
                    strcmp(argv[argpos], "-h") == 0) {
@@ -144,46 +144,48 @@ int main(int argc, char* argv[])
         usage(argv[0]);
         return -1;
     }
-
+    options->Set("node", Boolean::New(true));
     if (!some_parameter) {
+
         /* The good parts as defined by Douglas Crockford */
         options->Set("white", Boolean::New(true));
         options->Set("onevar", Boolean::New(true));
         options->Set("undef", Boolean::New(true));
-        options->Set("nomen", Boolean::New(true));
+        options->Set("nomen", Boolean::New(false));
         options->Set("regexp", Boolean::New(true));
         options->Set("plusplus", Boolean::New(true));
         options->Set("eqeqeq", Boolean::New(true));
         options->Set("immed", Boolean::New(true));
         options->Set("bitwise", Boolean::New(true));
         options->Set("newcap", Boolean::New(true));
+        options->Set("__dirname", Boolean::New(true));
 
         /* strict */
         options->Set("strict", Boolean::New(true));
 
-        /* assume browser */
-        options->Set("browser", Boolean::New(true));
+        /* assume node */
+
     }
 
     global->Set(v8::String::New("print"), v8::FunctionTemplate::New(Print));
     global->Set("source", source);
     global->Set("filename", filename);
     global->Set("options", options);
-    
+
     Handle<Context> context = Context::New(NULL, global);
 
     Context::Scope context_scope(context);
 
     Handle<Script> beautifyScript = Script::Compile(String::New(jslint_code));
     beautifyScript->Run();
-    
-    Handle<Script> runnerScript = Script::Compile(String::New("JSLINT(source, options);"));
+
+    Handle<Script> runnerScript = Script::Compile(String::New("JSHINT(source, options);"));
     Handle<Value> result = runnerScript->Run();
 
     Handle<Script> printScript;
-    if (vim_mode) 
+    if (vim_mode)
         printScript = Script::Compile(String::New(print_vim_code));
-    else 
+    else
         printScript = Script::Compile(String::New(print_human_code));
     printScript->Run();
 

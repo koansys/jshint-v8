@@ -33,6 +33,11 @@ Compile jslint-v8
 If you do not have ruby/rake you can run g++ directly, please look
 inside Rakefile.
 
+        ruby convert_to_h.rb print_human.js > print_human.
+        ruby convert_to_h.rb print_human.js > print_human.h
+        ruby convert_to_h.rb print_vim.js > print_vim.h
+        V8_BASEDIR=/usr/local/ rake compile
+
 
 Run on console
 --------------
