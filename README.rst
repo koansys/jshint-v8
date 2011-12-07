@@ -1,13 +1,13 @@
 
 Run jshint on the command line fast (with v8 engine)
-================================================
+====================================================
 
 jshint-v8 is a modern and extreamly fast runner for the popular jshint
 JavaScript style checker. jshint_ is a fork of jslint_ implemented
 by the JavaScript guru Douglas Crockford in JavaScript itself.
 
 Credits
---------
+-------
 
   * this work was forked from `geekQ's github`_
   * this work was inspired by jsbeautify_ implementation.
