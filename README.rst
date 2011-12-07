@@ -1,13 +1,13 @@
-
-Run jshint on the command line fast (with v8 engine)
-====================================================
+======================================================
+ Run jshint on the command line fast (with v8 engine)
+======================================================
 
 jshint-v8 is a modern and extreamly fast runner for the popular jshint
 JavaScript style checker. jshint_ is a fork of jslint_ implemented
 by the JavaScript guru Douglas Crockford in JavaScript itself.
 
 Credits
--------
+=======
 
   * this work was forked from `geekQ's github`_
   * this work was inspired by jsbeautify_ implementation.
@@ -15,8 +15,9 @@ Credits
   * vim support and Rakefile by `Vladimir Dobriakov`_ AKA geekQ_
 
 
-Build
------
+=======
+ Build
+=======
 
 this on OSX (10.7.0) but if you have the prerequisites installed it
 should work fine on BSD and Linux as well.
@@ -24,7 +25,7 @@ should work fine on BSD and Linux as well.
 **Assumption** You have python setup already with virtualenv
 
 Setup  V8
-+++++++++
+=========
 
 There are  acouple steps to set up V8
 
@@ -63,10 +64,10 @@ If it prints ``Hello world!!`` it worked. So let's put it someplace permanent::
     $ cp include/* /usr/local/include/
 
 Build jshint-v8
-+++++++++++++++
+===============
 
 Python
-------
+++++++
 
 ::
 
@@ -74,7 +75,7 @@ Python
 
 
 Ruby
-----
+++++
 
 ::
 
@@ -89,8 +90,9 @@ inside Rakefile.
         V8_BASEDIR=/usr/local/ rake compile
 
 
-Run on console
---------------
+================
+ Run on console
+================
 
     $ jshint --browser file.js
     $ jshint --node file.js
@@ -100,11 +102,12 @@ switches on the command line. Here `--browser` indicates that e.g.
 XMLHttpRequest object should be allowed and `--node` indicates Assume
 node.
 
-Emacs
------
+=======
+ Emacs
+=======
 
 Create a `flymake-jslint.el` file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================
 
 Create flymake-jslint.el in your emacs site direcory or somewher eon your load path with the folllowing contents::
 
@@ -133,7 +136,7 @@ Create flymake-jslint.el in your emacs site direcory or somewher eon your load p
     (provide 'flymake-jslint)
 
 Import it in your .emacs
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
 
 
 Add the following to .emacs::
@@ -143,8 +146,9 @@ Add the following to .emacs::
 	      (lambda () (flymake-mode 1)))
 
 
-Run from vim
-------------
+==============
+ Run from vim
+==============
 
 Set up `jshint` as make program in .vimrc:
 
@@ -162,6 +166,7 @@ See a screenshot for `usage inside vim`_.
 .. _jlbfalcao: https://github.com/jlbfalcao/jslint-v8
 .. _`Vladimir Dobriakov`: http://www.mobile-web-consulting.de
 .. _jslint: http://www.jslint.com/
+.. _jshint: http://www.jshint.com/
 .. _geekQ: http://www.geekQ.net/
 .. _`usage inside vim`: http://www.mobile-web-consulting.de/post/4745654954/run-jslint-fast-v8-engine-for-vim
 .. _`geekQ's github`: https://github.com/geekq/jslint-v8
