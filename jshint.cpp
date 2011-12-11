@@ -159,12 +159,13 @@ int main(int argc, char* argv[])
         options->Set("bitwise", Boolean::New(true));
         options->Set("newcap", Boolean::New(true));
         options->Set("__dirname", Boolean::New(true));
+        options->Set("laxbreak", Boolean::New(true));
 
         /* strict */
         options->Set("strict", Boolean::New(true));
 
         /* assume node */
-
+        options->Set("node", Boolean::New(true));
     }
 
     global->Set(v8::String::New("print"), v8::FunctionTemplate::New(Print));
